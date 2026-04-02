@@ -5,6 +5,19 @@ const db = require('./firebase');
 const app = express();
 app.use(express.json());
 
+const API_KEY = process.env.API_KEY;
+
+function requireApiKey(req, res, next) {
+    const authHeader = req.headers["authorization"];
+    if (authHeader !== API_KEY) {
+        return res.status(403).json({ error: "Acceso no autorizado" });
+    }
+    next();
+}
+
+app.use(requireApiKey);
+
+
 app.post('/saved-searches', function (req, res) {
     const { userId, name, searchType, filters, movieRefs } = req.body;
     if (!userId || !name) {
