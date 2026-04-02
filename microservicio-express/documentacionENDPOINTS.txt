@@ -1,0 +1,4 @@
+Eliminar: http://localhost:3000/saved-searches/details/id
+Get de todas las búsquedas de un usuario: http://localhost:3000/saved-searches/UserId
+Get de una busqueda especifica: http://localhost:3000/saved-searches/details/id->de la búsqueda
+Post: http://localhost:3000/saved-searches
