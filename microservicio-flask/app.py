@@ -70,7 +70,6 @@ def add_interaction():
 
 @app.route('/recommendations/<int:user_id>', methods=['GET'])
 def get_recommendations(user_id):
-    # Obtener películas favoritas del usuario
     favs = Interaction.query.filter_by(user_id=user_id, interaction_type='favorite').all()
     fav_movie_ids = [f.movie_id for f in favs]
     

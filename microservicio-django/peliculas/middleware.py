@@ -6,7 +6,6 @@ class APIKeyMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # Excluir rutas que no necesitan autenticación (opcional)
         if request.path.startswith('/admin/') or request.path.startswith('/api-auth/'):
             return self.get_response(request)
         

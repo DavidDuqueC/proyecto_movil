@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class GatewayController extends Controller
 {
+    /*EXPRESS*/
     public function getSavedSearches()
     {
         $userId = auth()->id(); 
@@ -120,7 +121,7 @@ class GatewayController extends Controller
         ])->post(env('FLASK_SERVICE_URL') . '/interactions', [
             'user_id' => auth()->id(),
             'movie_id' => $request->movie_id,
-            'type' => $request->type, 
+            'type' => 'favorite', 
         ]);
 
         return response()->json($response->json(), $response->status());
@@ -148,6 +149,130 @@ class GatewayController extends Controller
             }
             return response()->json($peliculas);
         }
+        return response()->json($response->json(), $response->status());
+    }
+    /*FLASK2 (peliculas favoritas)*/ 
+    public function agregarFavorito(Request $request)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => env('MICROSERVICES_API_KEY'),
+        ])->post(env('FAVORITOS_SERVICE_URL') . '/favorites', [
+            'user_id' => auth()->id(),
+            'movie_id' => $request->movie_id,
+        ]);
+        return response()->json($response->json(), $response->status());
+    }
+
+    public function eliminarFavorito($movieId)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => env('MICROSERVICES_API_KEY'),
+        ])->delete(env('FAVORITOS_SERVICE_URL') . '/favorites/' . $movieId, [
+            'user_id' => auth()->id(),
+        ]);
+        return response()->json($response->json(), $response->status());
+    }
+
+    public function listarFavoritos()
+    {
+        $userId = auth()->id();
+        $url = env('FAVORITOS_SERVICE_URL') . '/favorites?user_id=' . $userId;
+        \Log::info('FLASK URL: ' . $url);
+        
+        $response = Http::withHeaders([
+            'Authorization' => env('MICROSERVICES_API_KEY'),
+        ])->get($url);
+        
+        \Log::info('FLASK RESPONSE STATUS: ' . $response->status());
+        \Log::info('FLASK RESPONSE BODY: ' . $response->body());
+        
+        return response()->json($response->json(), $response->status());
+    }
+    /*public function listarFavoritos()
+    {
+        $userId = auth()->id();
+        $response = Http::withHeaders([
+            'Authorization' => env('MICROSERVICES_API_KEY'),
+        ])->get(env('FAVORITOS_SERVICE_URL') . '/favorites', [
+            'user_id' => $userId,
+        ]);
+        $ids = $response->json();
+        // Si quieres devolver los detalles completos de las películas, consulta Django
+        $peliculas = [];
+        foreach ($ids as $id) {
+            $movieResponse = Http::withHeaders([
+                'Authorization' => env('MICROSERVICES_API_KEY'),
+            ])->get(env('DJANGO_SERVICE_URL') . '/peliculas/' . $id . '/');
+            if ($movieResponse->successful()) {
+                $peliculas[] = $movieResponse->json();
+            }
+        }
+        return response()->json($peliculas);
+    }*/
+
+    
+    public function crearLista(Request $request)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => env('MICROSERVICES_API_KEY'),
+        ])->post(env('FAVORITOS_SERVICE_URL') . '/lists', [
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+        return response()->json($response->json(), $response->status());
+    }
+
+    public function obtenerListas()
+    {
+        $userId = auth()->id();
+        $response = Http::withHeaders([
+            'Authorization' => env('MICROSERVICES_API_KEY'),
+        ])->get(env('FAVORITOS_SERVICE_URL') . '/lists', [
+            'user_id' => $userId,
+        ]);
+        return response()->json($response->json(), $response->status());
+    }
+
+    public function agregarPeliculaALista(Request $request, $listId)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => env('MICROSERVICES_API_KEY'),
+        ])->post(env('FAVORITOS_SERVICE_URL') . '/lists/' . $listId . '/movies', [
+            'user_id' => auth()->id(),
+            'movie_id' => $request->movie_id,
+        ]);
+        return response()->json($response->json(), $response->status());
+    }
+
+    public function eliminarPeliculaDeLista($listId, $movieId)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => env('MICROSERVICES_API_KEY'),
+        ])->delete(env('FAVORITOS_SERVICE_URL') . '/lists/' . $listId . '/movies/' . $movieId, [
+            'user_id' => auth()->id(),
+        ]);
+        return response()->json($response->json(), $response->status());
+    }
+
+    public function obtenerPeliculasDeLista($listId)
+    {
+        $userId = auth()->id();
+        $response = Http::withHeaders([
+            'Authorization' => env('MICROSERVICES_API_KEY'),
+        ])->get(env('FAVORITOS_SERVICE_URL') . '/lists/' . $listId . '/movies', [
+            'user_id' => $userId,
+        ]);
+        return response()->json($response->json(), $response->status());
+    }
+
+    public function eliminarLista($listId)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => env('MICROSERVICES_API_KEY'),
+        ])->delete(env('FAVORITOS_SERVICE_URL') . '/lists/' . $listId, [
+            'user_id' => auth()->id(),
+        ]);
         return response()->json($response->json(), $response->status());
     }
 }

@@ -20,4 +20,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/peliculas/{id}', [GatewayController::class, 'eliminarPelicula']); //  admin
     Route::post('/interactions', [GatewayController::class, 'registrarInteraccion']);
     Route::get('/recommendations', [GatewayController::class, 'obtenerRecomendaciones']);
+    // Favoritos
+    Route::post('/favorites', [GatewayController::class, 'agregarFavorito']);
+    Route::delete('/favorites/{movieId}', [GatewayController::class, 'eliminarFavorito']);
+    Route::get('/favorites', [GatewayController::class, 'listarFavoritos']);
+    
+    // Listas personalizadas
+    Route::post('/lists', [GatewayController::class, 'crearLista']);
+    Route::get('/lists', [GatewayController::class, 'obtenerListas']);
+    Route::post('/lists/{listId}/movies', [GatewayController::class, 'agregarPeliculaALista']);
+    Route::delete('/lists/{listId}/movies/{movieId}', [GatewayController::class, 'eliminarPeliculaDeLista']);
+    Route::get('/lists/{listId}/movies', [GatewayController::class, 'obtenerPeliculasDeLista']);
+    Route::delete('/lists/{listId}', [GatewayController::class, 'eliminarLista']);
 });
