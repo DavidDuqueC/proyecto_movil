@@ -1,0 +1,40 @@
+
+laravel URL: http://127.0.0.1:8001
+
+
+POST   /api/register
+POST   /api/login
+
+REQUIEREN AUTENTICACIÓN (login token):
+
+POST   /api/logout
+
+# Búsquedas guardadas (Express + Firebase)
+GET    /api/saved-searches
+GET    /api/saved-searches/{id}
+POST   /api/saved-searches
+DELETE /api/saved-searches/{id}
+
+# Catálogo de películas (Django + PostgreSQL)
+GET    /api/peliculas
+GET    /api/peliculas/{id}
+POST   /api/peliculas        # solo admin
+PUT    /api/peliculas/{id}   # solo admin
+DELETE /api/peliculas/{id}   # solo admin
+
+# Recomendaciones (Flask + MySQL, puerto 5000)
+POST   /api/interactions      (types: favorite, search, view)
+GET    /api/recommendations
+
+# Favoritos (Flask + MySQL, puerto 5001)
+POST   /api/favorites
+DELETE /api/favorites/{movieId}
+GET    /api/favorites
+
+# Listas personalizadas (Flask + MySQL, puerto 5001)
+POST   /api/lists
+GET    /api/lists
+POST   /api/lists/{listId}/movies
+DELETE /api/lists/{listId}/movies/{movieId}
+GET    /api/lists/{listId}/movies
+DELETE /api/lists/{listId}
