@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Colores para output en consola
+GREEN='\033[0;32m'
+YELLOW='\1[33m'
+NC='\033[0m'
+
+BASE_DIR=~/Documentos/proyecto_movil
+LARAVEL_DIR="$BASE_DIR/BackendAPK"
+EXPRESS_DIR="$BASE_DIR/microservicio-express"
+DJANGO_DIR="$BASE_DIR/microservicio-django"
+FLASK_REC_DIR="$BASE_DIR/microservicio-flask-recomendaciones"
+FLASK_FAV_DIR="$BASE_DIR/microservicio-favoritos"
+
+# Archivo único de logs
+COMBINED_LOG="$BASE_DIR/combined.log"
+PID_FILE="$BASE_DIR/.pids"
+
+# Crear o limpiar archivo de logs
+> "$COMBINED_LOG"
+> "$PID_FILE"
+
+# Función para ejecutar un comando y redirigir su salida con prefijo
+run_with_prefix() {
+    local prefix=$1    (
+        cd "$dir" || exit 1
+        eval "$cmd" 2>&1 | while IFS= read -r line; do
+            echo "[$prefix] $line"
+        done
+    ) >> "$COMBINED_LOG" 2>&1 &
+    echo $! >> "$PID_FILE"
+    echo -e "${YELLOW}Iniciado $prefix con PID $!${NC}"
+}
+
+echo -e "${GREEN}Iniciando todos los servicios (logs en $COMBINED_LOG)${NC}"
+
+# 1. Laravel Gateway (puerto 8001)
+run_with_prefix "LARAVEL" "php artisan serve --port=8001" "$LARAVEL_DIR"
+
+# 2. Express (puerto 3000)
+run_with_prefix "EXPRESS" "node server.js" "$EXPRESS_DIR"
+
+# 3. Django (puerto 8000) - activar venv
+run_with_prefix "DJANGO" "source venv/bin/activate && python manage.py runserver 8000" "$DJANGO_DIR"
+
+# 4. Flask recomendaciones (puerto 5000)
+run_with_prefix "FLASK_REC" "source venv/bin/activate && python app.py" "$FLASK_REC_DIR"
+
+# 5. Flask favoritos (puerto 5001)
+run_with_prefix "FLASK_FAV" "source venv/bin/activate && python app.py" "$FLASK_FAV_DIR"
+
+echo -e "${GREEN}Todos los servicios iniciados.${NC}"
+echo "Para ver logs en tiempo real: tail -f $COMBINED_LOG"
+echo "Para detener servicios: ./stop-all.sh"

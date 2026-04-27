@@ -1,0 +1,40 @@
+[EXPRESS] ◇ injecting env (2) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+[EXPRESS] Microservicio corriendo en puerto 3000
+[FLASK_REC]  * Serving Flask app 'app'
+[FLASK_REC]  * Debug mode: on
+[FLASK_REC] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+[FLASK_REC]  * Running on http://127.0.0.1:5000
+[FLASK_REC] [33mPress CTRL+C to quit[0m
+[FLASK_REC]  * Restarting with stat
+[FLASK_FAV]  * Serving Flask app 'app'
+[FLASK_FAV]  * Debug mode: on
+[FLASK_FAV] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+[FLASK_FAV]  * Running on http://127.0.0.1:5001
+[FLASK_FAV] [33mPress CTRL+C to quit[0m
+[FLASK_FAV]  * Restarting with stat
+[DJANGO] Watching for file changes with StatReloader
+[LARAVEL] 
+[LARAVEL]    INFO  Server running on [http://0.0.0.0:8001].  
+[LARAVEL] 
+[LARAVEL]   Press Ctrl+C to stop the server
+[LARAVEL] 
+[FLASK_REC]  * Debugger is active!
+[FLASK_REC]  * Debugger PIN: 756-786-095
+[FLASK_FAV]  * Debugger is active!
+[FLASK_FAV]  * Debugger PIN: 114-847-451
+[LARAVEL]   2026-04-27 17:33:17 /api/login ................................... ~ 0.28ms
+[LARAVEL]   2026-04-27 17:33:17 /favicon.ico ............................... ~ 507.70ms
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 17:33:29] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 17:33:29 /api/favorites ............................... ~ 0.23ms
+[LARAVEL]   2026-04-27 17:39:46 /api/register .............................. ~ 500.71ms
+[LARAVEL]   2026-04-27 17:39:56 /api/login ................................... ~ 0.25ms
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 17:41:35] "GET /favorites?user_id=2 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 17:41:35 /api/favorites ............................... ~ 0.21ms
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 17:43:32] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 17:43:32 /api/favorites ............................... ~ 0.27ms
+[LARAVEL]   2026-04-27 17:44:24 /api/logout .................................. ~ 0.21ms
+[LARAVEL]   2026-04-27 17:44:30 /api/logout .................................. ~ 0.29ms
+[LARAVEL]   2026-04-27 17:44:56 /api/login ................................... ~ 0.23ms
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 17:45:23] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 17:45:23 /api/favorites ............................... ~ 0.23ms
+[EXPRESS] Terminado
