@@ -1,13 +1,13 @@
-[EXPRESS] ◇ injecting env (2) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+[EXPRESS] ◇ injecting env (2) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
 [EXPRESS] Microservicio corriendo en puerto 3000
 [FLASK_REC]  * Serving Flask app 'app'
 [FLASK_REC]  * Debug mode: on
+[FLASK_FAV]  * Serving Flask app 'app'
+[FLASK_FAV]  * Debug mode: on
 [FLASK_REC] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
 [FLASK_REC]  * Running on http://127.0.0.1:5000
 [FLASK_REC] [33mPress CTRL+C to quit[0m
 [FLASK_REC]  * Restarting with stat
-[FLASK_FAV]  * Serving Flask app 'app'
-[FLASK_FAV]  * Debug mode: on
 [FLASK_FAV] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
 [FLASK_FAV]  * Running on http://127.0.0.1:5001
 [FLASK_FAV] [33mPress CTRL+C to quit[0m
@@ -19,22 +19,82 @@
 [LARAVEL]   Press Ctrl+C to stop the server
 [LARAVEL] 
 [FLASK_REC]  * Debugger is active!
-[FLASK_REC]  * Debugger PIN: 756-786-095
 [FLASK_FAV]  * Debugger is active!
-[FLASK_FAV]  * Debugger PIN: 114-847-451
-[LARAVEL]   2026-04-27 17:33:17 /api/login ................................... ~ 0.28ms
-[LARAVEL]   2026-04-27 17:33:17 /favicon.ico ............................... ~ 507.70ms
-[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 17:33:29] "GET /favorites?user_id=1 HTTP/1.1" 200 -
-[LARAVEL]   2026-04-27 17:33:29 /api/favorites ............................... ~ 0.23ms
-[LARAVEL]   2026-04-27 17:39:46 /api/register .............................. ~ 500.71ms
-[LARAVEL]   2026-04-27 17:39:56 /api/login ................................... ~ 0.25ms
-[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 17:41:35] "GET /favorites?user_id=2 HTTP/1.1" 200 -
-[LARAVEL]   2026-04-27 17:41:35 /api/favorites ............................... ~ 0.21ms
-[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 17:43:32] "GET /favorites?user_id=1 HTTP/1.1" 200 -
-[LARAVEL]   2026-04-27 17:43:32 /api/favorites ............................... ~ 0.27ms
-[LARAVEL]   2026-04-27 17:44:24 /api/logout .................................. ~ 0.21ms
-[LARAVEL]   2026-04-27 17:44:30 /api/logout .................................. ~ 0.29ms
-[LARAVEL]   2026-04-27 17:44:56 /api/login ................................... ~ 0.23ms
-[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 17:45:23] "GET /favorites?user_id=1 HTTP/1.1" 200 -
-[LARAVEL]   2026-04-27 17:45:23 /api/favorites ............................... ~ 0.23ms
-[EXPRESS] Terminado
+[FLASK_REC]  * Debugger PIN: 100-648-417
+[FLASK_FAV]  * Debugger PIN: 998-892-383
+[DJANGO] [27/Apr/2026 23:03:55] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[DJANGO] Not Found: /api/peliculas/10/
+[DJANGO] [27/Apr/2026 23:03:55] "GET /api/peliculas/10/ HTTP/1.1" 404 49
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:03:55] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[DJANGO] [27/Apr/2026 23:05:16] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[DJANGO] Not Found: /api/peliculas/10/
+[DJANGO] [27/Apr/2026 23:05:16] "GET /api/peliculas/10/ HTTP/1.1" 404 49
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:05:16] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:05:16 /api/favorites ............................. ~ 500.59ms
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:06:02] "GET /favorites?user_id=10 HTTP/1.1" 200 -
+[DJANGO] Not Found: /api/peliculas/10/
+[DJANGO] [27/Apr/2026 23:08:23] "GET /api/peliculas/10/ HTTP/1.1" 404 49
+[DJANGO] [27/Apr/2026 23:08:40] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[DJANGO] [27/Apr/2026 23:11:48] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:11:48] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:11:48 /api/favorites ............................... ~ 0.23ms
+[DJANGO] [27/Apr/2026 23:11:56] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:11:56] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:11:56 /api/favorites ............................... ~ 0.23ms
+[DJANGO] [27/Apr/2026 23:15:28] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:15:28] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[DJANGO] [27/Apr/2026 23:15:28] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:15:28] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:15:28 /api/favorites ............................... ~ 0.30ms
+[LARAVEL]   2026-04-27 18:15:28 /api/favorites ............................... ~ 6.86ms
+[DJANGO] [27/Apr/2026 23:17:46] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:17:46] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:17:46 /api/favorites ............................... ~ 0.25ms
+[DJANGO] [27/Apr/2026 23:18:51] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:18:51] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:18:51 /api/favorites ............................... ~ 0.19ms
+[DJANGO] [27/Apr/2026 23:23:21] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:23:21] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:23:21 /api/favorites ............................... ~ 0.23ms
+[DJANGO] [27/Apr/2026 23:23:32] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:23:32] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:23:32 /api/favorites ............................... ~ 0.22ms
+[DJANGO] [27/Apr/2026 23:26:01] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:26:01] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[DJANGO] [27/Apr/2026 23:26:01] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:26:01] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:26:01 /api/favorites ............................... ~ 0.26ms
+[LARAVEL]   2026-04-27 18:26:01 /api/favorites ............................... ~ 6.27ms
+[DJANGO] [27/Apr/2026 23:26:03] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:26:03] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:26:03 /api/favorites ............................... ~ 0.23ms
+[DJANGO] [27/Apr/2026 23:26:24] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:26:24] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:26:24 /api/favorites ............................... ~ 0.28ms
+[DJANGO] [27/Apr/2026 23:32:21] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:32:21] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:32:21 /api/favorites ............................... ~ 0.23ms
+[DJANGO] [27/Apr/2026 23:32:25] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:32:25] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:32:25 /api/favorites ............................... ~ 0.26ms
+[DJANGO] [27/Apr/2026 23:32:43] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [27/Apr/2026 18:32:43] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-27 18:32:43 /api/favorites ............................... ~ 0.10ms
+[DJANGO] [28/Apr/2026 19:52:16] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 14:52:16] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-28 14:52:16 /api/favorites ............................... ~ 0.27ms
+[DJANGO] [28/Apr/2026 19:52:39] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 14:52:39] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-28 14:52:39 /api/favorites ............................... ~ 0.29ms
+[DJANGO] [28/Apr/2026 19:53:38] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 14:53:38] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-28 14:53:38 /api/favorites ............................... ~ 0.31ms
+[DJANGO] [28/Apr/2026 19:53:55] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 14:53:55] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-28 14:53:55 /api/favorites ............................. ~ 500.87ms
+[DJANGO] [28/Apr/2026 19:54:10] "GET /api/peliculas/1/ HTTP/1.1" 200 305
+[FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 14:54:10] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-28 14:54:10 /api/favorites ............................. ~ 500.88ms
+[DJANGO] [28/Apr/2026 20:04:04] "GET /api/peliculas/1/ HTTP/1.1" 200 385
+[FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 15:04:04] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-28 15:04:04 /api/favorites ............................... ~ 0.28ms

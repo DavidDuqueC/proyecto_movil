@@ -87,9 +87,23 @@ def get_favorites():
     user_id = request.args.get('user_id')
     if not user_id:
         return jsonify({'error': 'user_id requerido'}), 400
+    
     favs = UserFavorite.query.filter_by(user_id=user_id).all()
     movie_ids = [f.movie_id for f in favs]
-    return jsonify(movie_ids)
+    
+    if not movie_ids:
+        return jsonify([])
+    
+    headers = {'Authorization': app.config['API_KEY']}
+    detalles = []
+    for mid in movie_ids:
+        try:
+            resp = requests.get(f"http://127.0.0.1:8000/api/peliculas/{mid}/", headers=headers, timeout=2)
+            if resp.status_code == 200:
+                detalles.append(resp.json())
+        except Exception:
+            continue
+    return jsonify(detalles)
 
 @app.route('/favorites/details', methods=['GET'])
 def get_favorites_details():

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
   View, Text, StyleSheet, StatusBar, TouchableOpacity,
-  FlatList, ActivityIndicator, Alert
+  FlatList, ActivityIndicator, Alert, Image  // ← importa Image
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
@@ -133,26 +133,36 @@ export default function ProfileScreen({ onLogout }) {
     );
   };
 
-  const renderFavorite = ({ item }) => (
-    <TouchableOpacity style={styles.movieItem}>
-      <View style={styles.movieInfo}>
-        <Text style={styles.movieTitle}>{item.titulo}</Text>
-        <Text style={styles.movieDetails}>{item.anio} • {item.director}</Text>
-      </View>
-      <TouchableOpacity
-        style={styles.deleteButton}
-        onPress={() => removeFavorite(item.id, item.titulo)}
-      >
-        <Ionicons name="trash-outline" size={20} color="#ff6b6b" />
-      </TouchableOpacity>
-    </TouchableOpacity>
-  );
-
-  if (loading) {
+  // Renderizado de cada favorito con imagen
+  function renderFavorite({ item }) {
+    console.log('Poster URL:', item.poster_url);
+  
     return (
-      <View style={[styles.container, styles.center]}>
-        <ActivityIndicator size="large" color="#fff" />
-      </View>
+      <TouchableOpacity style={styles.movieItem}>
+        <Image
+          source={{
+            uri: item.poster_url && item.poster_url !== 'N/A' && item.poster_url.trim() !== ''
+              ? item.poster_url
+              : 'https://via.placeholder.com/50x75?text=No+Poster'
+          }}
+          style={styles.poster}
+          onError={function(e) {
+            console.log('Error cargando imagen:', e.nativeEvent.error, 'URL:', item.poster_url);
+          }}
+        />
+        <View style={styles.movieInfo}>
+          <Text style={styles.movieTitle}>{item.titulo}</Text>
+          <Text style={styles.movieDetails}>{item.anio} • {item.director}</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={function() {
+            removeFavorite(item.id, item.titulo);
+          }}
+        >
+          <Ionicons name="trash-outline" size={20} color="#ff6b6b" />
+        </TouchableOpacity>
+      </TouchableOpacity>
     );
   }
 
@@ -207,7 +217,6 @@ export default function ProfileScreen({ onLogout }) {
   );
 }
 
-// Los estilos permanecen igual que en tu código original...
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#5822cdbe', paddingHorizontal: 20, paddingTop: 60 },
   center: { justifyContent: 'center', alignItems: 'center' },
@@ -226,7 +235,8 @@ const styles = StyleSheet.create({
   sectionTitle: { color: '#fff', fontSize: 16, fontWeight: '600', letterSpacing: 1 },
   countText: { color: 'rgba(255,255,255,0.5)', fontSize: 12 },
   moviesList: { flex: 1 },
-  movieItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.1)' },
+  movieItem: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.1)' },
+  poster: { width: 50, height: 75, marginRight: 12, borderRadius: 4, backgroundColor: '#333' },
   movieInfo: { flex: 1 },
   movieTitle: { color: '#fff', fontSize: 16, marginBottom: 4 },
   movieDetails: { color: 'rgba(255,255,255,0.5)', fontSize: 12 },
