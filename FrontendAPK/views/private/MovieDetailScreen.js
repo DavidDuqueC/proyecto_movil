@@ -1,4 +1,3 @@
-// MovieDetailScreen.js
 import * as React from 'react';
 import {
   View, Text, Image, StyleSheet, ScrollView,
@@ -8,23 +7,52 @@ import { Ionicons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 
 const API_BASE_URL = 'http://192.168.1.188:8001/api';
+const OMDB_API_KEY = 'ed07482e';
+const OMDB_BASE_URL = 'https://www.omdbapi.com/';
 
 export default function MovieDetailScreen({ route, navigation }) {
-  const { movie } = route.params; // movie puede venir de OMDB (Home) o del backend (Profile)
-  const [isFavorite, setIsFavorite] = React.useState(false);
+  const { movie } = route.params;
+  const [details, setDetails] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
+  const [isFavorite, setIsFavorite] = React.useState(false);
 
-  // Normalizar datos (OMDB vs backend)
-  const title = movie.Title || movie.titulo;
-  const year = movie.Year || movie.anio;
-  const director = movie.Director || movie.director;
-  const poster = movie.Poster || movie.poster_url;
-  const synopsis = movie.Plot || movie.sinopsis || 'Sinopsis no disponible';
-  const genre = movie.Genre || (movie.generos ? movie.generos.join(', ') : 'No especificado');
+  const hasFullDetails = movie && (movie.Director || movie.director || movie.Plot);
 
   React.useEffect(() => {
-    checkIfFavorite();
+    if (hasFullDetails) {
+      setDetails(movie);
+      setLoading(false);
+    } else if (movie.imdbID) {
+      fetchMovieDetails(movie.imdbID);
+    } else {
+      Alert.alert('Error', 'No se pudieron cargar los detalles');
+      setLoading(false);
+    }
   }, []);
+
+  React.useEffect(() => {
+    if (details) {
+      checkIfFavorite();
+    }
+  }, [details]);
+
+  const fetchMovieDetails = (imdbID) => {
+    const url = `${OMDB_BASE_URL}?i=${imdbID}&apikey=${OMDB_API_KEY}`;
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data.Response === 'True') {
+          setDetails(data);
+        } else {
+          Alert.alert('Error', data.Error || 'No se encontraron detalles');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        Alert.alert('Error', 'No se pudo conectar con OMDB');
+      })
+      .finally(() => setLoading(false));
+  };
 
   const checkIfFavorite = async () => {
     try {
@@ -34,14 +62,11 @@ export default function MovieDetailScreen({ route, navigation }) {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const favorites = await response.json();
-      // Buscar por ID (OMDB usa imdbID, backend usa id)
-      const movieId = movie.imdbID || movie.id;
+      const movieId = details.imdbID || details.id;
       const fav = favorites.some(fav => (fav.id === movieId || fav.imdbID === movieId));
       setIsFavorite(fav);
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -51,26 +76,17 @@ export default function MovieDetailScreen({ route, navigation }) {
       Alert.alert('Inicia sesión', 'Debes iniciar sesión para guardar favoritos');
       return;
     }
-    const movieId = movie.imdbID || movie.id;
+    const movieId = details.imdbID || details.id;
     try {
       if (isFavorite) {
-        // Eliminar de favoritos
-        const response = await fetch(`${API_BASE_URL}/favorites/${movieId}`, {
+        await fetch(`${API_BASE_URL}/favorites/${movieId}`, {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (response.ok) {
-          setIsFavorite(false);
-          Alert.alert('Eliminado', 'Película eliminada de favoritos');
-        }
+        setIsFavorite(false);
+        Alert.alert('Eliminado', 'Película eliminada de favoritos');
       } else {
-        // Agregar a favoritos - primero necesitamos el ID numérico (backend)
-        // Si viene de OMDB, no tenemos un id numérico en nuestro catálogo.
-        // Aquí asumimos que la película ya existe en el backend.
-        // Para simplificar, enviaremos un título y si no existe, fallará.
-        // Mejor: consultar si existe en backend, si no, crearla (opcional).
-        // Por ahora solo funciona si la película ya está en tu catálogo.
-        const response = await fetch(`${API_BASE_URL}/favorites`, {
+        await fetch(`${API_BASE_URL}/favorites`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -78,21 +94,25 @@ export default function MovieDetailScreen({ route, navigation }) {
           },
           body: JSON.stringify({ movie_id: movieId })
         });
-        if (response.ok) {
-          setIsFavorite(true);
-          Alert.alert('Agregado', 'Película agregada a favoritos');
-        } else {
-          const data = await response.json();
-          Alert.alert('Error', data.error || 'No se pudo agregar a favoritos');
-        }
+        setIsFavorite(true);
+        Alert.alert('Agregado', 'Película agregada a favoritos');
       }
     } catch (error) {
-      console.error(error);
       Alert.alert('Error', 'Ocurrió un error');
     }
   };
 
-  if (loading) {
+  const getRating = () => {
+    if (details && details.Ratings) {
+      const rotten = details.Ratings.find(r => r.Source === 'Rotten Tomatoes');
+      if (rotten) return rotten.Value;
+      const imdb = details.Ratings.find(r => r.Source === 'Internet Movie Database');
+      if (imdb) return imdb.Value;
+    }
+    return 'N/D';
+  };
+
+  if (loading || !details) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color="#5822cdbe" />
@@ -100,9 +120,16 @@ export default function MovieDetailScreen({ route, navigation }) {
     );
   }
 
+  const title = details.Title || details.titulo;
+  const year = details.Year || details.anio;
+  const director = details.Director || details.director || 'No disponible';
+  const poster = details.Poster || details.poster_url;
+  const synopsis = details.Plot || details.sinopsis || 'Sinopsis no disponible';
+  const genre = details.Genre || (details.generos ? details.generos.join(', ') : 'No especificado');
+  const rating = getRating();
+
   return (
     <ScrollView style={styles.container}>
-      {/* Header con botón atrás y favorito */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
@@ -117,40 +144,34 @@ export default function MovieDetailScreen({ route, navigation }) {
         </TouchableOpacity>
       </View>
 
-      {/* Póster */}
       <Image
         source={{ uri: poster !== 'N/A' ? poster : 'https://via.placeholder.com/300x450?text=No+Poster' }}
         style={styles.poster}
       />
 
-      {/* Información */}
       <View style={styles.infoContainer}>
+        {/* Rating ahora aparece de primero */}
+        <View style={styles.ratingBadge}>
+          <Text style={styles.ratingValue}>{rating}</Text>
+          <Text style={styles.ratingLabel}>RottenTomatoe SCORE</Text>
+        </View>
+
         <Text style={styles.title}>{title}</Text>
+        
         <Text style={styles.detail}><Text style={styles.bold}>Director:</Text> {director}</Text>
         <Text style={styles.detail}><Text style={styles.bold}>Año:</Text> {year}</Text>
         <Text style={styles.detail}><Text style={styles.bold}>Géneros:</Text> {genre}</Text>
+        
         <Text style={styles.synopsisTitle}>Sinopsis</Text>
         <Text style={styles.synopsis}>{synopsis}</Text>
-        <View style={styles.ratingContainer}>
-          <Text style={styles.ratingLabel}>CALIFICACIÓN:</Text>
-          <Text style={styles.ratingValue}>4.5</Text>
-        </View>
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#5822cdbe',
-  },
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#5822cdbe',
-  },
+  container: { flex: 1, backgroundColor: '#5822cdbe' },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#5822cdbe' },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -160,73 +181,20 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     backgroundColor: 'rgba(0,0,0,0.3)',
   },
-  backButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    letterSpacing: 2,
-  },
-  favButton: {
-    padding: 8,
-  },
-  poster: {
-    width: '100%',
-    height: 400,
-    resizeMode: 'cover',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  infoContainer: {
-    padding: 20,
-  },
-  title: {
-    color: '#fff',
-    fontSize: 26,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  detail: {
-    color: '#fff',
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  bold: {
-    fontWeight: 'bold',
-  },
-  synopsisTitle: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  synopsis: {
-    color: 'rgba(255,255,255,0.9)',
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 20,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 10,
-    paddingVertical: 12,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(255,255,255,0.2)',
-  },
-  ratingLabel: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  ratingValue: {
-    color: '#ffcc00',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
+  backButton: { padding: 8 },
+  headerTitle: { color: '#fff', fontSize: 20, fontWeight: 'bold', letterSpacing: 3 },
+  favButton: { padding: 8 },
+  poster: { width: '76%', height: 400, resizeMode: 'cover', alignSelf: 'center', borderBottomLeftRadius: 5, borderBottomRightRadius: 5 },
+  infoContainer: { padding: 25 },
+  
+  // Estilo del Rating al inicio
+  ratingBadge: { alignSelf: 'center', alignItems: 'center', marginBottom: 10, backgroundColor: 'rgba(0,0,0,0.2)', paddingHorizontal: 15, paddingVertical: 5, borderRadius: 20 },
+  ratingLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 10, fontWeight: 'bold', letterSpacing: 1 },
+  ratingValue: { color: '#ffcc00', fontSize: 22, fontWeight: '900' },
+
+  title: { color: '#fff', fontSize: 28, fontWeight: '900', marginBottom: 20, textAlign: 'center', letterSpacing: 0.5 },
+  detail: { color: '#fff', fontSize: 16, marginBottom: 10, fontWeight: '300', letterSpacing: 0.3 },
+  bold: { fontWeight: '700', color: 'rgba(255,255,255,0.8)' },
+  synopsisTitle: { color: '#fff', fontSize: 18, fontWeight: '800', marginTop: 25, marginBottom: 10, letterSpacing: 1, textTransform: 'uppercase' },
+  synopsis: { color: 'rgba(255,255,255,0.85)', fontSize: 16, lineHeight: 26, marginBottom: 30, fontWeight: '400' },
 });
