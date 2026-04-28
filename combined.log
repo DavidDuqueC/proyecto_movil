@@ -98,3 +98,265 @@
 [DJANGO] [28/Apr/2026 20:04:04] "GET /api/peliculas/1/ HTTP/1.1" 200 385
 [FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 15:04:04] "GET /favorites?user_id=1 HTTP/1.1" 200 -
 [LARAVEL]   2026-04-28 15:04:04 /api/favorites ............................... ~ 0.28ms
+[DJANGO] [28/Apr/2026 20:28:58] "GET /api/peliculas/1/ HTTP/1.1" 200 385
+[FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 15:28:58] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-28 15:28:58 /api/favorites ............................... ~ 0.13ms
+[FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 15:29:11] "[35m[1mPOST /favorites HTTP/1.1[0m" 500 -
+[FLASK_FAV] Traceback (most recent call last):
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+[FLASK_FAV]     self.dialect.do_execute(
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+[FLASK_FAV]     cursor.execute(statement, parameters)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+[FLASK_FAV]     result = self._query(query)
+[FLASK_FAV]              ^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+[FLASK_FAV]     conn.query(q)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 575, in query
+[FLASK_FAV]     self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+[FLASK_FAV]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 826, in _read_query_result
+[FLASK_FAV]     result.read()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 1203, in read
+[FLASK_FAV]     first_packet = self.connection._read_packet()
+[FLASK_FAV]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 782, in _read_packet
+[FLASK_FAV]     packet.raise_for_error()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+[FLASK_FAV]     err.raise_mysql_exception(self._data)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+[FLASK_FAV]     raise errorclass(errno, errval)
+[FLASK_FAV] pymysql.err.DataError: (1366, "Incorrect integer value: 'tt0120663' for column 'movie_id' at row 1")
+[FLASK_FAV] 
+[FLASK_FAV] The above exception was the direct cause of the following exception:
+[FLASK_FAV] 
+[FLASK_FAV] Traceback (most recent call last):
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 1536, in __call__
+[FLASK_FAV]     return self.wsgi_app(environ, start_response)
+[FLASK_FAV]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 1514, in wsgi_app
+[FLASK_FAV]     response = self.handle_exception(e)
+[FLASK_FAV]                ^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+[FLASK_FAV]     response = self.full_dispatch_request()
+[FLASK_FAV]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+[FLASK_FAV]     rv = self.handle_user_exception(e)
+[FLASK_FAV]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+[FLASK_FAV]     rv = self.dispatch_request()
+[FLASK_FAV]          ^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+[FLASK_FAV]     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+[FLASK_FAV]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/app.py", line 70, in add_favorite
+[FLASK_FAV]     db.session.commit()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/scoping.py", line 597, in commit
+[FLASK_FAV]     return self._proxied.commit()
+[FLASK_FAV]            ^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2030, in commit
+[FLASK_FAV]     trans.commit(_to_root=True)
+[FLASK_FAV]   File "<string>", line 2, in commit
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+[FLASK_FAV]     ret_value = fn(self, *arg, **kw)
+[FLASK_FAV]                 ^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1311, in commit
+[FLASK_FAV]     self._prepare_impl()
+[FLASK_FAV]   File "<string>", line 2, in _prepare_impl
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+[FLASK_FAV]     ret_value = fn(self, *arg, **kw)
+[FLASK_FAV]                 ^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1286, in _prepare_impl
+[FLASK_FAV]     self.session.flush()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4331, in flush
+[FLASK_FAV]     self._flush(objects)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4466, in _flush
+[FLASK_FAV]     with util.safe_reraise():
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+[FLASK_FAV]     raise exc_value.with_traceback(exc_tb)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4427, in _flush
+[FLASK_FAV]     flush_context.execute()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+[FLASK_FAV]     rec.execute(self)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+[FLASK_FAV]     util.preloaded.orm_persistence.save_obj(
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+[FLASK_FAV]     _emit_insert_statements(
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1233, in _emit_insert_statements
+[FLASK_FAV]     result = connection.execute(
+[FLASK_FAV]              ^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+[FLASK_FAV]     return meth(
+[FLASK_FAV]            ^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+[FLASK_FAV]     return connection._execute_clauseelement(
+[FLASK_FAV]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+[FLASK_FAV]     ret = self._execute_context(
+[FLASK_FAV]           ^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+[FLASK_FAV]     return self._exec_single_context(
+[FLASK_FAV]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+[FLASK_FAV]     self._handle_dbapi_exception(
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+[FLASK_FAV]     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+[FLASK_FAV]     self.dialect.do_execute(
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+[FLASK_FAV]     cursor.execute(statement, parameters)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+[FLASK_FAV]     result = self._query(query)
+[FLASK_FAV]              ^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+[FLASK_FAV]     conn.query(q)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 575, in query
+[FLASK_FAV]     self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+[FLASK_FAV]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 826, in _read_query_result
+[FLASK_FAV]     result.read()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 1203, in read
+[FLASK_FAV]     first_packet = self.connection._read_packet()
+[FLASK_FAV]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 782, in _read_packet
+[FLASK_FAV]     packet.raise_for_error()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+[FLASK_FAV]     err.raise_mysql_exception(self._data)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+[FLASK_FAV]     raise errorclass(errno, errval)
+[FLASK_FAV] sqlalchemy.exc.DataError: (pymysql.err.DataError) (1366, "Incorrect integer value: 'tt0120663' for column 'movie_id' at row 1")
+[FLASK_FAV] [SQL: INSERT INTO user_favorites (user_id, movie_id, created_at) VALUES (%(user_id)s, %(movie_id)s, %(created_at)s)]
+[FLASK_FAV] [parameters: {'user_id': 1, 'movie_id': 'tt0120663', 'created_at': datetime.datetime(2026, 4, 28, 20, 29, 11, 189621)}]
+[FLASK_FAV] (Background on this error at: https://sqlalche.me/e/20/9h9h)
+[LARAVEL]   2026-04-28 15:29:11 /api/favorites ............................... ~ 0.24ms
+[FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 15:29:14] "[35m[1mPOST /favorites HTTP/1.1[0m" 500 -
+[FLASK_FAV] Traceback (most recent call last):
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+[FLASK_FAV]     self.dialect.do_execute(
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+[FLASK_FAV]     cursor.execute(statement, parameters)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+[FLASK_FAV]     result = self._query(query)
+[FLASK_FAV]              ^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+[FLASK_FAV]     conn.query(q)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 575, in query
+[FLASK_FAV]     self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+[FLASK_FAV]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 826, in _read_query_result
+[FLASK_FAV]     result.read()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 1203, in read
+[FLASK_FAV]     first_packet = self.connection._read_packet()
+[FLASK_FAV]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 782, in _read_packet
+[FLASK_FAV]     packet.raise_for_error()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+[FLASK_FAV]     err.raise_mysql_exception(self._data)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+[FLASK_FAV]     raise errorclass(errno, errval)
+[FLASK_FAV] pymysql.err.DataError: (1366, "Incorrect integer value: 'tt0120663' for column 'movie_id' at row 1")
+[FLASK_FAV] 
+[FLASK_FAV] The above exception was the direct cause of the following exception:
+[FLASK_FAV] 
+[FLASK_FAV] Traceback (most recent call last):
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 1536, in __call__
+[FLASK_FAV]     return self.wsgi_app(environ, start_response)
+[FLASK_FAV]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 1514, in wsgi_app
+[FLASK_FAV]     response = self.handle_exception(e)
+[FLASK_FAV]                ^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+[FLASK_FAV]     response = self.full_dispatch_request()
+[FLASK_FAV]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+[FLASK_FAV]     rv = self.handle_user_exception(e)
+[FLASK_FAV]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+[FLASK_FAV]     rv = self.dispatch_request()
+[FLASK_FAV]          ^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+[FLASK_FAV]     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+[FLASK_FAV]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/app.py", line 70, in add_favorite
+[FLASK_FAV]     db.session.commit()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/scoping.py", line 597, in commit
+[FLASK_FAV]     return self._proxied.commit()
+[FLASK_FAV]            ^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2030, in commit
+[FLASK_FAV]     trans.commit(_to_root=True)
+[FLASK_FAV]   File "<string>", line 2, in commit
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+[FLASK_FAV]     ret_value = fn(self, *arg, **kw)
+[FLASK_FAV]                 ^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1311, in commit
+[FLASK_FAV]     self._prepare_impl()
+[FLASK_FAV]   File "<string>", line 2, in _prepare_impl
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+[FLASK_FAV]     ret_value = fn(self, *arg, **kw)
+[FLASK_FAV]                 ^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1286, in _prepare_impl
+[FLASK_FAV]     self.session.flush()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4331, in flush
+[FLASK_FAV]     self._flush(objects)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4466, in _flush
+[FLASK_FAV]     with util.safe_reraise():
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+[FLASK_FAV]     raise exc_value.with_traceback(exc_tb)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4427, in _flush
+[FLASK_FAV]     flush_context.execute()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+[FLASK_FAV]     rec.execute(self)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+[FLASK_FAV]     util.preloaded.orm_persistence.save_obj(
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+[FLASK_FAV]     _emit_insert_statements(
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1233, in _emit_insert_statements
+[FLASK_FAV]     result = connection.execute(
+[FLASK_FAV]              ^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+[FLASK_FAV]     return meth(
+[FLASK_FAV]            ^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+[FLASK_FAV]     return connection._execute_clauseelement(
+[FLASK_FAV]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+[FLASK_FAV]     ret = self._execute_context(
+[FLASK_FAV]           ^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+[FLASK_FAV]     return self._exec_single_context(
+[FLASK_FAV]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+[FLASK_FAV]     self._handle_dbapi_exception(
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+[FLASK_FAV]     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+[FLASK_FAV]     self.dialect.do_execute(
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+[FLASK_FAV]     cursor.execute(statement, parameters)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+[FLASK_FAV]     result = self._query(query)
+[FLASK_FAV]              ^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+[FLASK_FAV]     conn.query(q)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 575, in query
+[FLASK_FAV]     self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+[FLASK_FAV]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 826, in _read_query_result
+[FLASK_FAV]     result.read()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 1203, in read
+[FLASK_FAV]     first_packet = self.connection._read_packet()
+[FLASK_FAV]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/connections.py", line 782, in _read_packet
+[FLASK_FAV]     packet.raise_for_error()
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+[FLASK_FAV]     err.raise_mysql_exception(self._data)
+[FLASK_FAV]   File "/home/aevd4123/Documentos/proyecto_movil/microservicio-favoritos/venv/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+[FLASK_FAV]     raise errorclass(errno, errval)
+[FLASK_FAV] sqlalchemy.exc.DataError: (pymysql.err.DataError) (1366, "Incorrect integer value: 'tt0120663' for column 'movie_id' at row 1")
+[FLASK_FAV] [SQL: INSERT INTO user_favorites (user_id, movie_id, created_at) VALUES (%(user_id)s, %(movie_id)s, %(created_at)s)]
+[FLASK_FAV] [parameters: {'user_id': 1, 'movie_id': 'tt0120663', 'created_at': datetime.datetime(2026, 4, 28, 20, 29, 14, 361143)}]
+[FLASK_FAV] (Background on this error at: https://sqlalche.me/e/20/9h9h)
+[LARAVEL]   2026-04-28 15:29:14 /api/favorites ............................... ~ 0.28ms
+[DJANGO] [28/Apr/2026 20:34:00] "GET /api/peliculas/1/ HTTP/1.1" 200 385
+[FLASK_FAV] 127.0.0.1 - - [28/Apr/2026 15:34:00] "GET /favorites?user_id=1 HTTP/1.1" 200 -
+[LARAVEL]   2026-04-28 15:34:00 /api/favorites ............................... ~ 0.27ms

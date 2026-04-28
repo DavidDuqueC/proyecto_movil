@@ -48,15 +48,14 @@ export default function HomeScreen() {
   };
 
   // Al presionar una película, navegar a detalle (IMDb ID)
-  const handleMoviePress = (imdbID, title) => {
-    Alert.alert('Info', `Ver detalles de: ${title}`);
-    // navigation.navigate('MovieDetail', { imdbID });
+  const handleMoviePress = (movie) => {
+    navigation.navigate('MovieDetail', { movie });
   };
 
   const renderMovie = ({ item }) => (
     <TouchableOpacity
       style={styles.resultItem}
-      onPress={() => handleMoviePress(item.imdbID, item.Title)}
+      onPress={() => handleMoviePress(item)}
     >
       <Image
         source={{ uri: item.Poster !== 'N/A' ? item.Poster : 'https://via.placeholder.com/300x450?text=No+Poster' }}

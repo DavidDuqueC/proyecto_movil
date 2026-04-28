@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SecureStore from 'expo-secure-store';
 
-// Importa las pantallas (ajusta las rutas según tu estructura)
 import LoginScreen from '../FrontendAPK/views/public/Login';
 import HomeScreen from '../FrontendAPK/views/private/Home';
 import ProfileScreen from '../FrontendAPK/views/private/Profile';
+import MovieDetailScreen from '../FrontendAPK/views/private/MovieDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +15,6 @@ export default function App() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [userToken, setUserToken] = React.useState(null);
 
-  // Verificar si existe un token guardado al iniciar la app
   React.useEffect(() => {
     const checkToken = async () => {
       try {
@@ -30,12 +29,10 @@ export default function App() {
     checkToken();
   }, []);
 
-  // Función para manejar el login exitoso
   const handleLogin = (token) => {
     setUserToken(token);
   };
 
-  // Función para manejar el logout
   const handleLogout = async () => {
     await SecureStore.deleteItemAsync('userToken');
     await SecureStore.deleteItemAsync('userEmail');
@@ -43,7 +40,6 @@ export default function App() {
   };
 
   if (isLoading) {
-    // Puedes mostrar un splash screen o un indicador
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#5822cdbe' }}>
         <ActivityIndicator size="large" color="#fff" />
@@ -54,21 +50,18 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {userToken ? (
-          // Usuario autenticado: muestra las pantallas privadas
-          <>
-            <Stack.Screen name="Home">
-              {(props) => <HomeScreen {...props} token={userToken} onLogout={handleLogout} />}
-            </Stack.Screen>
-            <Stack.Screen name="Profile">
-              {(props) => <ProfileScreen {...props} token={userToken} onLogout={handleLogout} />}
-            </Stack.Screen>
-          </>
-        ) : (
-          // Usuario no autenticado: muestra Login
+        {!userToken ? (
           <Stack.Screen name="Login">
             {(props) => <LoginScreen {...props} onLogin={handleLogin} />}
           </Stack.Screen>
+        ) : (
+          <React.Fragment>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Profile">
+              {(props) => <ProfileScreen {...props} onLogout={handleLogout} />}
+            </Stack.Screen>
+            <Stack.Screen name="MovieDetail" component={MovieDetailScreen} />
+          </React.Fragment>
         )}
       </Stack.Navigator>
     </NavigationContainer>
