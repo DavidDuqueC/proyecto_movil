@@ -19,14 +19,21 @@
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
+        "monochromeImage": "./assets/android-icon-monochrome.png",
+        "usesCleartextTraffic": "true"
+      },
+      "package": "com.davidduquec.FrontendAPK"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c1d3b693-c8d9-41d6-9ec4-3a44e21bcecb"
+      }
+    }
   }
 }
