@@ -1,0 +1,151 @@
+services:
+  # Base de datos MySQL para Laravel, Flask y favoritos
+  mysql:
+    image: mysql:8.0
+    container_name: umbra_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ddc11mjd
+      MYSQL_DATABASE: APK
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - umbra_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+
+  # Base de datos PostgreSQL para Django
+  postgres:
+    image: postgres:15
+    container_name: umbra_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: catalogo_peliculas
+      POSTGRES_USER: django_user
+      POSTGRES_PASSWORD: ddc11mjd
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - umbra_network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "django_user", "-d", "catalogo_peliculas"]
+      timeout: 10s
+      retries: 5
+
+  # Laravel Gateway
+  laravel:
+    build: ./BackendAPK
+    container_name: umbra_laravel
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: true
+      APP_URL: http://localhost:8001
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: APK
+      DB_USERNAME: root
+      DB_PASSWORD: ddc11mjd
+      MICROSERVICES_API_KEY: miclave123
+      EXPRESS_SERVICE_URL: http://express:3000
+      DJANGO_SERVICE_URL: http://django:8000
+      FLASK_SERVICE_URL: http://flask_rec:5000
+      FAVORITOS_SERVICE_URL: http://flask_fav:5001
+    depends_on:
+      mysql:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      express:
+        condition: service_started
+      django:
+        condition: service_started
+      flask_rec:
+        condition: service_started
+      flask_fav:
+        condition: service_started
+    networks:
+      - umbra_network
+
+  # Express (búsquedas guardadas)
+  express:
+    build: ./microservicio-express
+    container_name: umbra_express
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      API_KEY: miclave123
+    networks:
+      - umbra_network
+
+  # Django (catálogo)
+  django:
+    build: ./microservicio-django
+    container_name: umbra_django
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      IS_DOCKER: "true"
+      API_KEY: miclave123
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - umbra_network
+
+  # Flask recomendaciones
+  flask_rec:
+    build: ./microservicio-flask
+    container_name: umbra_flask_rec
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      API_KEY: miclave123
+      DB_URI: mysql+pymysql://root:ddc11mjd@mysql:3306/recomendaciones_db
+      DJANGO_MOVIE_SERVICE_URL: http://django:8000/api/peliculas/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      django:
+        condition: service_started
+    networks:
+      - umbra_network
+
+  # Flask favoritos y listas
+  flask_fav:
+    build: ./microservicio-favoritos
+    container_name: umbra_flask_fav
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      PORT: 5001
+      API_KEY: miclave123
+      DB_URI: mysql+pymysql://root:ddc11mjd@mysql:3306/favoritos_db
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - umbra_network
+
+networks:
+  umbra_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  postgres_data:

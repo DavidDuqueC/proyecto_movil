@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 API_KEY = 'miclave123'
-
+IS_DOCKER = os.getenv('IS_DOCKER', 'false').lower() == 'true'
 # Application definition
 
 INSTALLED_APPS = [
@@ -77,16 +78,31 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'catalogo_peliculas',      
-        'USER': 'usuario_django',          
-        'PASSWORD': 'ddc11mjd',            
-        'HOST': 'localhost',
-        'PORT': '5432',
+if IS_DOCKER:
+    # Configuración para Docker
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'catalogo_peliculas',
+            'USER': 'django_user',
+            'PASSWORD': 'ddc11mjd',
+            'HOST': 'postgres',  # nombre del servicio en docker-compose
+            'PORT': '5432',
+        }
     }
-}
+else:
+    # Configuración para ejecución local (sin Docker)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'catalogo_peliculas',
+            'USER': 'usuario_django',
+            'PASSWORD': 'ddc11mjd',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
+
 
 
 # Password validation
