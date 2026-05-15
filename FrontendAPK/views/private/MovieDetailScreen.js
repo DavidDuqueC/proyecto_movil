@@ -6,7 +6,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 
-const API_BASE_URL = 'http://192.168.1.188:8001/api';
+const API_BASE_URL = 'http://192.168.0.112:8001/api';
 const OMDB_API_KEY = 'ed07482e';
 const OMDB_BASE_URL = 'https://www.omdbapi.com/';
 
@@ -32,6 +32,8 @@ export default function MovieDetailScreen({ route, navigation }) {
 
   React.useEffect(() => {
     if (details) {
+      console.log('Detalles cargados:', details);
+      console.log('imdbID:', details.imdbID);
       checkIfFavorite();
     }
   }, [details]);
@@ -76,32 +78,45 @@ export default function MovieDetailScreen({ route, navigation }) {
       Alert.alert('Inicia sesión', 'Debes iniciar sesión para guardar favoritos');
       return;
     }
-    const movieId = details.imdbID || details.id;
+    
+    const userId = await SecureStore.getItemAsync('userId');
+    console.log('userId:', userId);
+    console.log('imdbID a enviar:', details.imdbID);
+    
+    const requestBody = { 
+      imdb_id: details.imdbID,
+      user_id: parseInt(userId)
+    };
+    console.log('Cuerpo de la petición:', JSON.stringify(requestBody));
+    
     try {
       if (isFavorite) {
-        await fetch(`${API_BASE_URL}/favorites/${movieId}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        setIsFavorite(false);
-        Alert.alert('Eliminado', 'Película eliminada de favoritos');
+        // Eliminar...
       } else {
-        await fetch(`${API_BASE_URL}/favorites`, {
+        const response = await fetch(`${API_BASE_URL}/favorites`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ movie_id: movieId })
+          body: JSON.stringify(requestBody)
         });
-        setIsFavorite(true);
-        Alert.alert('Agregado', 'Película agregada a favoritos');
+        
+        const responseText = await response.text();
+        console.log('Respuesta del servidor:', response.status, responseText);
+        
+        if (response.ok) {
+          setIsFavorite(true);
+          Alert.alert('Agregado', 'Película agregada a favoritos');
+        } else {
+          Alert.alert('Error', `No se pudo agregar: ${responseText}`);
+        }
       }
     } catch (error) {
-      Alert.alert('Error', 'Ocurrió un error');
+      console.error('Error en toggleFavorite:', error);
+      Alert.alert('Error', 'Ocurrió un error al procesar la solicitud');
     }
   };
-
   const getRating = () => {
     if (details && details.Ratings) {
       const rotten = details.Ratings.find(r => r.Source === 'Rotten Tomatoes');

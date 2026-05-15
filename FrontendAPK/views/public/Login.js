@@ -17,7 +17,7 @@ export default function Login({ onLogin }) {
     setLoading(true);
     const data = { email, password };
 
-    fetch('http://192.168.1.188:8001/api/login', {
+    fetch('http://192.168.0.112:8001/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -27,8 +27,18 @@ export default function Login({ onLogin }) {
       })
       .then(function(result) {
         if (result.token) {
+          // Guardar token y email
           SecureStore.setItemAsync('userToken', result.token);
           SecureStore.setItemAsync('userEmail', email);
+
+          // Guardar user_id (si viene en la respuesta)
+          if (result.user_id) {
+            SecureStore.setItemAsync('userId', result.user_id.toString());
+          } else {
+            // Si no viene, extraer del token o consultar perfil
+            console.warn('user_id no está en la respuesta del login');
+          }
+
           onLogin(result.token);
         } else {
           Alert.alert('Error', result.message || 'Credenciales inválidas');

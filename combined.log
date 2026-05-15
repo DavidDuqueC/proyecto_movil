@@ -1,24 +1,48 @@
-[EXPRESS] ◇ injecting env (2) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+[EXPRESS] ◇ injecting env (2) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
 [EXPRESS] Microservicio corriendo en puerto 3000
-[DJANGO] Watching for file changes with StatReloader
-[FLASK_REC]  * Serving Flask app 'app'
-[FLASK_REC]  * Debug mode: on
 [FLASK_FAV]  * Serving Flask app 'app'
 [FLASK_FAV]  * Debug mode: on
-[FLASK_REC] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
-[FLASK_REC]  * Running on http://127.0.0.1:5000
-[FLASK_REC] [33mPress CTRL+C to quit[0m
-[FLASK_REC]  * Restarting with stat
 [FLASK_FAV] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
 [FLASK_FAV]  * Running on http://127.0.0.1:5001
 [FLASK_FAV] [33mPress CTRL+C to quit[0m
 [FLASK_FAV]  * Restarting with stat
+[DJANGO] Watching for file changes with StatReloader
+[FLASK_REC]  * Serving Flask app 'app'
+[FLASK_REC]  * Debug mode: on
+[FLASK_REC] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+[FLASK_REC]  * Running on http://127.0.0.1:5000
+[FLASK_REC] [33mPress CTRL+C to quit[0m
+[FLASK_REC]  * Restarting with stat
 [LARAVEL] 
 [LARAVEL]    INFO  Server running on [http://0.0.0.0:8001].  
 [LARAVEL] 
 [LARAVEL]   Press Ctrl+C to stop the server
 [LARAVEL] 
 [FLASK_FAV]  * Debugger is active!
+[FLASK_FAV]  * Debugger PIN: 327-369-195
 [FLASK_REC]  * Debugger is active!
-[FLASK_FAV]  * Debugger PIN: 209-423-441
-[FLASK_REC]  * Debugger PIN: 606-581-915
+[FLASK_REC]  * Debugger PIN: 231-005-278
+[DJANGO] [15/May/2026 23:37:25] "GET /api/peliculas/?imdb_id=tt0429031 HTTP/1.1" 200 2
+[DJANGO] [15/May/2026 23:37:46] "GET /api/peliculas/?imdb_id=tt0429031 HTTP/1.1" 200 2
+[DJANGO] [15/May/2026 23:37:46] "POST /api/peliculas/ HTTP/1.1" 201 503
+[FLASK_FAV] 127.0.0.1 - - [15/May/2026 18:37:46] "[35m[1mPOST /favorites HTTP/1.1[0m" 201 -
+[DJANGO] [15/May/2026 23:38:02] "GET /api/peliculas/?imdb_id=tt0429031 HTTP/1.1" 200 505
+[LARAVEL]   2026-05-15 18:38:10 /api/favorites ............................... ~ 0.25ms
+[DJANGO] [15/May/2026 23:38:38] "GET /api/peliculas/2/ HTTP/1.1" 200 534
+[DJANGO] [15/May/2026 23:38:38] "GET /api/peliculas/4/ HTTP/1.1" 200 503
+[FLASK_FAV] 127.0.0.1 - - [15/May/2026 18:38:38] "GET /favorites?user_id=2 HTTP/1.1" 200 -
+[LARAVEL]   2026-05-15 18:38:38 /api/favorites ............................... ~ 0.23ms
+[DJANGO] [15/May/2026 23:38:50] "GET /api/peliculas/2/ HTTP/1.1" 200 534
+[DJANGO] [15/May/2026 23:38:50] "GET /api/peliculas/4/ HTTP/1.1" 200 503
+[FLASK_FAV] 127.0.0.1 - - [15/May/2026 18:38:50] "GET /favorites?user_id=2 HTTP/1.1" 200 -
+[LARAVEL]   2026-05-15 18:38:50 /api/favorites ............................... ~ 0.24ms
+[DJANGO] [15/May/2026 23:38:50] "GET /api/peliculas/?imdb_id=tt5950044 HTTP/1.1" 200 2
+[DJANGO] [15/May/2026 23:38:51] "POST /api/peliculas/ HTTP/1.1" 201 607
+[FLASK_FAV] 127.0.0.1 - - [15/May/2026 18:38:51] "[35m[1mPOST /favorites HTTP/1.1[0m" 201 -
+[LARAVEL]   2026-05-15 18:38:50 /api/favorites ............................. ~ 500.56ms
+[DJANGO] [15/May/2026 23:38:53] "GET /api/peliculas/2/ HTTP/1.1" 200 534
+[DJANGO] [15/May/2026 23:38:53] "GET /api/peliculas/4/ HTTP/1.1" 200 503
+[DJANGO] [15/May/2026 23:38:53] "GET /api/peliculas/5/ HTTP/1.1" 200 607
+[FLASK_FAV] 127.0.0.1 - - [15/May/2026 18:38:53] "GET /favorites?user_id=2 HTTP/1.1" 200 -
+[LARAVEL]   2026-05-15 18:38:53 /api/favorites ............................... ~ 0.13ms
+[EXPRESS] Terminado

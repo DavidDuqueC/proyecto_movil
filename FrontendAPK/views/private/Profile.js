@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 
-const API_BASE_URL = 'http://192.168.1.188:8001/api';
+const API_BASE_URL = 'http://192.168.0.112:8001/api';
 
 export default function ProfileScreen({ onLogout }) {
   const navigation = useNavigation();

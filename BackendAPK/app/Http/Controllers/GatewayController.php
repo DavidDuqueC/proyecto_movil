@@ -154,12 +154,22 @@ class GatewayController extends Controller
     /*FLASK2 (peliculas favoritas)*/ 
     public function agregarFavorito(Request $request)
     {
+        $userId = auth()->id();
+        
+        // Agregar logs para depurar
+        \Log::info('Agregando favorito - Usuario ID: ' . $userId);
+        \Log::info('Datos recibidos: ' . json_encode($request->all()));
+        
         $response = Http::withHeaders([
             'Authorization' => env('MICROSERVICES_API_KEY'),
+            'Content-Type' => 'application/json'
         ])->post(env('FAVORITOS_SERVICE_URL') . '/favorites', [
-            'user_id' => auth()->id(),
-            'movie_id' => $request->movie_id,
+            'user_id' => $userId,
+            'imdb_id' => $request->imdb_id
         ]);
+        
+        \Log::info('Respuesta de Flask: ' . $response->status() . ' - ' . $response->body());
+        
         return response()->json($response->json(), $response->status());
     }
 

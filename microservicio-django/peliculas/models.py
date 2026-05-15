@@ -1,5 +1,4 @@
 from django.db import models
-
 from django.contrib.postgres.fields import ArrayField
 
 class Pelicula(models.Model):
@@ -9,6 +8,7 @@ class Pelicula(models.Model):
     sinopsis = models.TextField()
     generos = ArrayField(models.CharField(max_length=50), blank=True, default=list)
     poster_url = models.URLField(blank=True, null=True)
+    imdb_id = models.CharField(max_length=20, blank=True, null=True, unique=True)  # ← agregar esto
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
